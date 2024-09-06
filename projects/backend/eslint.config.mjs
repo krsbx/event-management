@@ -62,7 +62,7 @@ export default [
     rules: {
       '@typescript-eslint/no-empty-function': 'off',
       '@typescript-eslint/no-var-requires': 'off',
-      '@typescript-eslint/no-unused-vars': 'error',
+      '@typescript-eslint/no-unused-vars': 'warn',
       '@typescript-eslint/no-shadow': 'warn',
       'import/extensions': 'off',
       'import/no-dynamic-require': 'off',
@@ -82,6 +82,8 @@ export default [
       'no-shadow': 'off',
       camelcase: 'warn',
       'no-return-await': 'off',
+      'no-restricted-syntax': 'warn',
+      'no-await-in-loop': 'off',
       'max-params': ['error', 3],
     },
   },
