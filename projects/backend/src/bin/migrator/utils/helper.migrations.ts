@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-syntax */
 import { Mongoose } from 'mongoose';
 import { Backend } from '../../../types/backend';
 import { Migration } from '../../migrations/models/migration.migrations';
@@ -10,7 +11,6 @@ type MigrationParams = {
 };
 
 export async function upMigrations({
-  db,
   histories,
   migrations,
   target,
@@ -34,22 +34,17 @@ export async function upMigrations({
     return;
   }
 
-  const session = await db.startSession();
+  await migration.migration.up();
 
-  await session.withTransaction(async () => {
-    await migration.migration.up(session);
-
-    await Migration.create({
-      migrationName: migration.name,
-      executedAt: new Date(),
-    });
+  await Migration.create({
+    migrationName: migration.name,
+    executedAt: new Date(),
   });
 
-  session.endSession();
+  console.log(`Applied "${target}" migration!`);
 }
 
 export async function downMigrations({
-  db,
   histories,
   migrations,
   target,
@@ -68,23 +63,16 @@ export async function downMigrations({
     return;
   }
 
-  const session = await db.startSession();
+  await migration.migration.down();
 
-  await session.withTransaction(async () => {
-    await migration.migration.down(session);
-
-    await Migration.deleteOne()
-      .where({
-        migrationName: target,
-      })
-      .session(session);
+  await Migration.deleteOne().where({
+    migrationName: target,
   });
 
-  session.endSession();
+  console.log(`Reverted "${target}" migration!`);
 }
 
 export async function revertMigrations({
-  db,
   histories,
   migrations,
 }: MigrationParams) {
@@ -94,24 +82,17 @@ export async function revertMigrations({
   }
 
   for (const { migration, name } of migrations) {
-    const session = await db.startSession();
+    await migration.down();
 
-    await session.withTransaction(async () => {
-      await migration.down(session);
-
-      await Migration.deleteOne()
-        .where({
-          migrationName: name,
-        })
-        .session(session);
+    await Migration.deleteOne().where({
+      migrationName: name,
     });
-
-    session.endSession();
   }
+
+  console.log(`Reverted ${migrations.length} migrations!`);
 }
 
 export async function latestMigrations({
-  db,
   histories,
   migrations,
 }: MigrationParams) {
@@ -125,19 +106,15 @@ export async function latestMigrations({
   );
 
   for (const target of targets) {
-    const session = await db.startSession();
+    await target.migration.up();
 
-    await session.withTransaction(async () => {
-      await target.migration.up(session);
-
-      await Migration.create([
-        {
-          migrationName: target.name,
-          executedAt: new Date(),
-        },
-      ]);
-
-      session.endSession();
-    });
+    await Migration.create([
+      {
+        migrationName: target.name,
+        executedAt: new Date(),
+      },
+    ]);
   }
+
+  console.log(`Applied ${targets.length} new migrations!`);
 }

@@ -8,6 +8,8 @@ const envSchema = z.object({
   MONGODB_DATABASE: z.string(),
   MONGODB_USER: z.string(),
   MONGODB_PASSWORD: z.string(),
+  SALT_ROUND: z.coerce.number(),
+  JWT_SECRET: z.string(),
 });
 
 export const env = envSchema.parse(process.env);

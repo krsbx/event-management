@@ -6,10 +6,10 @@
   "scripts": {
     "seed:create":"npx tsx src/bin/cli create",
     "seed": "npx tsx src/bin/cli migrate",
-    "seed:up": "npm run migrate --action up",
-    "seed:down": "npm run migrate --action down",
-    "seed:revert": "npm run migrate --action revert",
-    "seed:latest": "npm run migrate --action latest",
+    "seed:up": "npm run seed -- --action up",
+    "seed:down": "npm run seed -- --action down",
+    "seed:revert": "npm run seed -- --action revert",
+    "seed:latest": "npm run seed -- --action latest",
     "dev": "npx tsx --watch src/index.ts",
     "build": "rimraf dist && tsc --project tsconfig.build.json"
   },

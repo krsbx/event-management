@@ -55,44 +55,50 @@ export class MigratorCli extends CommandLineAction {
 
     switch (this.action.value) {
       case MigrationAction.UP: {
-        return upMigrations({
+        await upMigrations({
           db,
           histories,
           migrations: seeders,
           target: this.target.value,
         });
+        break;
       }
 
       case MigrationAction.DOWN: {
-        return downMigrations({
+        await downMigrations({
           db,
           histories,
           migrations: seeders,
           target: this.target.value,
         });
+        break;
       }
 
       case MigrationAction.REVERT: {
-        return revertMigrations({
+        await revertMigrations({
           db,
           histories,
           migrations: seeders,
           target: this.target.value,
         });
+        break;
       }
 
       case MigrationAction.LATEST: {
-        return latestMigrations({
+        await latestMigrations({
           db,
           histories,
           migrations: seeders,
           target: this.target.value,
         });
+        break;
       }
 
       default: {
         throw new Error(`Unknown action: ${this.action.value}`);
       }
     }
+
+    db.disconnect();
   }
 }

@@ -1,4 +1,4 @@
-export interface Migration {
+export interface IMigration {
   migrationName: string;
   executedAt: Date;
 }
