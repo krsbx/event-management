@@ -41,7 +41,11 @@ export class GeneratorCli extends CommandLineAction {
     const prefix = dayjs().format('YYYYMMDDHHmmss');
 
     const fileName = `${prefix}-${this.name.value}.ts`;
-    const destDir = path.resolve(APP_SERVICE_PATH, this.outDir.value);
+    const destDir = path.resolve(
+      APP_SERVICE_PATH,
+      this.outDir.value,
+      'seeders'
+    );
     const destPath = path.resolve(destDir, fileName);
     const srcPath = path.resolve(__dirname, `./skeleton/seeder.ts`);
 

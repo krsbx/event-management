@@ -15,6 +15,18 @@
 	// 	],
 	// 	"description": "Log output to console"
 	// }
+  "Create Blaze Service": {
+    "scope": "javascript,typescript",
+    "description": "Create Blaze Service with Blaze Creator",
+    "prefix": "bcs",
+    "body": [
+      "import { BlazeCreator } from '@busy-hour/blaze'",
+      "",
+      "const service = BlazeCreator.service({})",
+      "",
+      "export default service"
+    ]
+  },
   "Create Blaze Action": {
     "scope": "javascript,typescript",
     "description": "Create Blaze Action with Blaze Creator",
