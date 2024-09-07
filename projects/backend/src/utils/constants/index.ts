@@ -1,7 +1,8 @@
 import { Random } from '@busy-hour/blaze-types/helper';
 import { BlazeContext } from '@busy-hour/blaze/internal';
 import path from 'node:path';
-import { User } from '../../services/users/models/user.users';
+import { Document } from '../../types/backend';
+import { IUser } from '../../services/users/interfaces/user.users';
 
 export const APP_ROOT_PATH = path.resolve(__dirname, '../../..');
 
@@ -28,7 +29,7 @@ export const metaList = {
 export type MetaList = typeof metaList & Record<string, Random>;
 
 export const metaAuth = {
-  user: null as typeof User | null,
+  user: null as Document<IUser> | null,
 };
 
 export type MetaAuth = typeof metaAuth & Record<string, Random>;

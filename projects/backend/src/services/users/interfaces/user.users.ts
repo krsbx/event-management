@@ -8,12 +8,3 @@ export interface IUser {
   createdAt?: Date;
   updatedAt?: Date;
 }
-
-export interface AuthedUser {
-  _id: string;
-  username: string;
-  companyName: string;
-  role: UserRoles;
-  createdAt: string | Date;
-  updatedAt: string | Date;
-}

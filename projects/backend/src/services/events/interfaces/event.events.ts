@@ -7,6 +7,7 @@ export interface IEvent {
   proposedDates: Date[];
   status: EventStatus;
   remarks: string | null;
+  companyName: string;
   proposedBy: Types.ObjectId;
   proposedTo: Types.ObjectId;
   eventDate: Date;

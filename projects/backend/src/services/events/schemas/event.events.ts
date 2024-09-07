@@ -13,6 +13,7 @@ export const eventSchema = new Schema<IEvent>(
       required: true,
       default: EventStatus.PENDING,
     },
+    companyName: { type: String, required: true },
     proposedBy: { type: Schema.ObjectId, ref: 'User', required: true },
     proposedTo: { type: Schema.ObjectId, ref: 'User', required: true },
     remarks: { type: String, required: false, default: null },
