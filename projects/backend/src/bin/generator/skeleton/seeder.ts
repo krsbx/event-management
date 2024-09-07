@@ -1,5 +1,3 @@
-import { ClientSession } from 'mongoose';
+export async function up() {}
 
-export async function up(session?: ClientSession) {}
-
-export async function down(session?: ClientSession) {}
+export async function down() {}

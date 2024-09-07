@@ -17,7 +17,7 @@ export async function up() {
     Array(5)
       .fill(null)
       .map(async (_, index) => {
-        const username = `hr-${index + 1}`;
+        const username = `vendor-${index + 1}`;
         const passwordRes = await context.call('core.$hashText', {
           text: username,
         });
@@ -30,7 +30,7 @@ export async function up() {
           username,
           password: passwordRes.result,
           companyName: `company-${index + 1}`,
-          role: UserRoles.HUMAN_RESOURCE,
+          role: UserRoles.VENDOR,
           createdAt: date,
           updatedAt: date,
         };
@@ -45,8 +45,8 @@ export async function down() {
     username: {
       $in: Array(5)
         .fill(null)
-        .map((_, index) => `hr-${index + 1}`),
+        .map((_, index) => `vendor-${index + 1}`),
     },
-    role: UserRoles.HUMAN_RESOURCE,
+    role: UserRoles.VENDOR,
   });
 }

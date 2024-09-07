@@ -1,10 +1,10 @@
 /* eslint-disable no-restricted-syntax */
 import { Mongoose } from 'mongoose';
-import { Backend } from '../../../types/backend';
+import { MigrationFile } from '../../../types/backend';
 import { Migration } from '../../migrations/models/migration.migrations';
 
 type MigrationParams = {
-  migrations: { name: string; migration: Backend.Migration }[];
+  migrations: { name: string; migration: MigrationFile }[];
   db: Mongoose;
   histories: string[];
   target: string | undefined;

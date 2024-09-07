@@ -1,5 +1,6 @@
+import bcrypt from 'bcrypt';
 import { BlazeCreator, z } from '@busy-hour/blaze';
-import { hashText } from '../utils/$hash.core';
+import { env } from '../../../utils/env';
 
 export const $onHashText = BlazeCreator.action({
   validator: BlazeCreator.action.validator({
@@ -10,6 +11,8 @@ export const $onHashText = BlazeCreator.action({
   async handler(ctx) {
     const { text } = await ctx.request.body();
 
-    return hashText(text);
+    const salt = await bcrypt.genSalt(env.SALT_ROUND);
+
+    return bcrypt.hash(text, salt);
   },
 });

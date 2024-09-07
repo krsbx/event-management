@@ -3,7 +3,7 @@ import path from 'node:path';
 import fs from 'node:fs';
 import { Migration } from '../models/migration.migrations';
 import { APP_SERVICE_PATH } from '../../../utils/constants';
-import { Backend } from '../../../types/backend';
+import { MigrationFile } from '../../../types/backend';
 
 export async function listMigrationHistories() {
   const histories = await Migration.find().sort({ executedAt: -1 });
@@ -48,7 +48,7 @@ export async function listSeeders() {
   return Promise.all(
     migrations.map(async (migration) => ({
       name: path.parse(migration).name,
-      migration: (await import(migration)) as Backend.Migration,
+      migration: (await import(migration)) as MigrationFile,
     }))
   );
 }
