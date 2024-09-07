@@ -2,7 +2,7 @@ import { Random } from '@busy-hour/blaze-types/helper';
 import { BlazeContext } from '@busy-hour/blaze/internal';
 import path from 'node:path';
 
-export const APP_ROOT_PATH = path.resolve(__dirname, '../..');
+export const APP_ROOT_PATH = path.resolve(__dirname, '../../..');
 
 export const APP_SRC_PATH = path.resolve(APP_ROOT_PATH, 'src');
 

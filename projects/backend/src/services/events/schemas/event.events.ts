@@ -1,6 +1,6 @@
 import { Schema } from 'mongoose';
 import { IEvent } from '../interfaces/event.events';
-import { EventStatus } from '../utils/constants.events';
+import { EventStatus } from '../../../utils/constants/services.constants';
 
 export const eventSchema = new Schema<IEvent>(
   {

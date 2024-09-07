@@ -1,8 +1,8 @@
 import { Blaze } from '@busy-hour/blaze';
 import { User } from '../models/user.users';
 import { IUser } from '../interfaces/user.users';
-import { UserRoles } from '../utils/constants.users';
 import { APP_SERVICE_PATH, context } from '../../../utils/constants';
+import { UserRoles } from '../../../utils/constants/services.constants';
 
 export async function up() {
   const app = new Blaze();

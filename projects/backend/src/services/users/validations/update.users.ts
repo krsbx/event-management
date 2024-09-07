@@ -1,9 +1,9 @@
 import { z } from '@busy-hour/blaze';
 import { Document, Types } from 'mongoose';
 import { RecordUnknown } from '@busy-hour/blaze-types/helper';
-import { UserRoles } from '../utils/constants.users';
 import { FilterQuery } from '../../../types/backend';
 import { IUser } from '../interfaces/user.users';
+import { UserRoles } from '../../../utils/constants/services.constants';
 
 export const $updateBodySchema = z.object({
   payload: z.object({

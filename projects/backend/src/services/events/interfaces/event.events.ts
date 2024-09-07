@@ -1,5 +1,5 @@
 import { Types } from 'mongoose';
-import { EventStatus } from '../utils/constants.events';
+import { EventStatus } from '../../../utils/constants/services.constants';
 
 export interface IEvent {
   eventName: string;
