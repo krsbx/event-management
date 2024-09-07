@@ -33,8 +33,10 @@ export const onSignUpUser = BlazeCreator.action({
 
     const user = userRes.result as Document & IUser;
 
+    ctx.status = 201;
+
     return {
-      user,
+      id: user._id,
     };
   },
 });
