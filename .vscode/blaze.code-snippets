@@ -1,0 +1,76 @@
+{
+	// Place your busy-hour-api workspace snippets here. Each snippet is defined under a snippet name and has a scope, prefix, body and 
+	// description. Add comma separated ids of the languages where the snippet is applicable in the scope field. If scope 
+	// is left empty or omitted, the snippet gets applied to all languages. The prefix is what is 
+	// used to trigger the snippet and the body will be expanded and inserted. Possible variables are: 
+	// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. 
+	// Placeholders with the same ids are connected.
+	// Example:
+	// "Print to console": {
+	// 	"scope": "javascript,typescript",
+	// 	"prefix": "log",
+	// 	"body": [
+	// 		"console.log('$1');",
+	// 		"$2"
+	// 	],
+	// 	"description": "Log output to console"
+	// }
+  "Create Blaze Action": {
+    "scope": "javascript,typescript",
+    "description": "Create Blaze Action with Blaze Creator",
+    "prefix": "bca",
+    "body": [
+      "import { BlazeCreator } from '@busy-hour/blaze'",
+      "",
+      "export const ${1:action} = BlazeCreator.action({",
+      "  throwOnValidationError: true,",
+      "  validator: BlazeCreator.action.validator({}),",
+      "  async handler(ctx) {}",
+      "})"
+    ],
+  },
+  "Create Blaze Event": {
+    "scope": "javascript,typescript",
+    "description": "Create Blaze Event with Blaze Creator",
+    "prefix": "bce",
+    "body": [
+      "import { BlazeCreator, z } from '@busy-hour/blaze'",
+      "",
+      "export const ${1:event} = BlazeCreator.event({",
+      "  throwOnValidationError: true,",
+      "  validator: BlazeCreator.event.validator(z.object({})),",
+      "  async handler(ctx) {}",
+      "})"
+    ],
+  },
+  "Create Blaze Validation": {
+    "scope": "javascript,typescript",
+    "description": "Create Blaze Validations with Blaze Creator",
+    "prefix": "bcv",
+    "body": [
+      "import { z } from '@busy-hour/blaze'",
+      "",
+      "export const ${1:validation} = z.object({})"
+    ],
+  },
+  "Create Before Hook": {
+    "scope": "javascript,typescript",
+    "description": "Create Blaze Before Hook with Blaze Creator",
+    "prefix": "bchb",
+    "body": [
+      "import { BlazeCreator } from '@busy-hour/blaze'",
+      "",
+      "export const ${1:hook} = BlazeCreator.action.hook.before(async (ctx) => {})"
+    ],
+  },
+  "Create After Hook": {
+    "scope": "javascript,typescript",
+    "description": "Create Blaze After Hook with Blaze Creator",
+    "prefix": "bcha",
+    "body": [
+      "import { BlazeCreator } from '@busy-hour/blaze'",
+      "",
+      "export const ${1:hook} = BlazeCreator.action.hook.after(async (ctx) => {})"
+    ],
+  }
+}

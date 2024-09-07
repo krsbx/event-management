@@ -2,7 +2,7 @@ import { Schema } from 'mongoose';
 import { IUser } from '../interfaces/user.users';
 import { UserRoles } from '../utils/constants.users';
 
-export const userSchema = new Schema<IUser>({
+const userSchema = new Schema<IUser>({
   username: { type: String, required: true },
   password: { type: String, required: true },
   companyName: { type: String, required: true },
@@ -10,3 +10,18 @@ export const userSchema = new Schema<IUser>({
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
 });
+
+// Index the collections
+
+// Make sure a username are unique between each companies
+userSchema.index(
+  {
+    username: 1,
+    companyName: 1,
+  },
+  {
+    unique: true,
+  }
+);
+
+export { userSchema };
