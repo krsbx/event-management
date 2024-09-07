@@ -20,23 +20,20 @@ export const $onListEvent = BlazeCreator.action({
   async handler(ctx) {
     const { filter, attributes } = await ctx.request.body();
     const count = await Event.countDocuments().where(filter);
-    let queries: Document<IEvent>[];
+    let queries = Event.find()
+      .where(filter)
+      .limit(ctx.meta.get('limit'))
+      .skip(ctx.meta.get('offset'))
+      .populate(['eventName', 'proposedBy', 'proposedTo']);
 
-    if (!attributes) {
-      queries = Event.find()
-        .where(filter)
-        .limit(ctx.meta.get('limit'))
-        .skip(ctx.meta.get('offset')) as never;
-    } else {
-      queries = Event.find()
-        .where(filter)
-        .select(attributes)
-        .limit(ctx.meta.get('limit'))
-        .skip(ctx.meta.get('offset')) as never;
+    if (attributes) {
+      queries = queries.select(attributes);
     }
 
+    const data = (await queries) as Document<IEvent>[];
+
     return {
-      data: await queries,
+      data,
       count,
     };
   },

@@ -20,23 +20,19 @@ export const $onListUser = BlazeCreator.action({
   async handler(ctx) {
     const { filter, attributes } = await ctx.request.body();
     const count = await User.countDocuments().where(filter);
-    let queries: Document<IUser>[];
+    let queries = User.find()
+      .where(filter)
+      .limit(ctx.meta.get('limit'))
+      .skip(ctx.meta.get('offset'));
 
-    if (!attributes) {
-      queries = User.find()
-        .where(filter)
-        .limit(ctx.meta.get('limit'))
-        .skip(ctx.meta.get('offset')) as never;
-    } else {
-      queries = User.find()
-        .where(filter)
-        .select(attributes)
-        .limit(ctx.meta.get('limit'))
-        .skip(ctx.meta.get('offset')) as never;
+    if (attributes) {
+      queries = queries.select(attributes);
     }
 
+    const data = (await queries) as Document<IUser>[];
+
     return {
-      data: await queries,
+      data,
       count,
     };
   },

@@ -2,6 +2,8 @@ import { BlazeCreator } from '@busy-hour/blaze';
 import { validateFindFilter } from '../../../hooks/before/find.hooks';
 import { $findBodySchema } from '../validations/find.events';
 import { AvailableEvent } from '../models/available.events';
+import { Document } from '../../../types/backend';
+import { IAvailableEvent } from '../interfaces/available.events';
 
 export const $onFindEvent = BlazeCreator.action({
   throwOnValidationError: true,
@@ -14,10 +16,15 @@ export const $onFindEvent = BlazeCreator.action({
   async handler(ctx) {
     const { filter, attributes } = await ctx.request.body();
 
-    if (!attributes) {
-      return AvailableEvent.findOne().where(filter);
+    let queries = AvailableEvent.findOne()
+      .where(filter)
+      .limit(ctx.meta.get('limit'))
+      .skip(ctx.meta.get('offset'));
+
+    if (attributes) {
+      queries = queries.select(attributes);
     }
 
-    return AvailableEvent.findOne().where(filter).select(attributes);
+    return (await queries) as Document<IAvailableEvent>;
   },
 });

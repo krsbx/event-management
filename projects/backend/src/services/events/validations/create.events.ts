@@ -2,7 +2,10 @@ import { z } from '@busy-hour/blaze';
 import { EventStatus } from '../../../utils/constants/services.constants';
 
 export const $createBodySchema = z.object({
-  eventName: z.string().openapi({ example: 'event name' }),
+  eventName: z
+    .string()
+    .length(24)
+    .openapi({ example: '66dbee51d126d6ffae044d02' }),
   location: z.string().openapi({ example: 'location' }),
   proposedDates: z
     .array(z.coerce.date())

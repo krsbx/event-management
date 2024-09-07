@@ -2,7 +2,7 @@ import { Types } from 'mongoose';
 import { EventStatus } from '../../../utils/constants/services.constants';
 
 export interface IEvent {
-  eventName: string;
+  eventName: Types.ObjectId;
   location: string;
   proposedDates: Date[];
   status: EventStatus;

@@ -10,6 +10,10 @@ export const $onCreateEvent = BlazeCreator.action({
   async handler(ctx) {
     const payload = await ctx.request.body();
 
-    return Event.create(payload);
+    return (await Event.create(payload)).populate([
+      'eventName',
+      'proposedBy',
+      'proposedTo',
+    ]);
   },
 });

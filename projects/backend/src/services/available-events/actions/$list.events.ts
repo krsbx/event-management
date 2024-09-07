@@ -20,23 +20,19 @@ export const $onListEvent = BlazeCreator.action({
   async handler(ctx) {
     const { filter, attributes } = await ctx.request.body();
     const count = await AvailableEvent.countDocuments().where(filter);
-    let queries: Document<IAvailableEvent>[];
+    let queries = AvailableEvent.find()
+      .where(filter)
+      .limit(ctx.meta.get('limit'))
+      .skip(ctx.meta.get('offset'));
 
-    if (!attributes) {
-      queries = AvailableEvent.find()
-        .where(filter)
-        .limit(ctx.meta.get('limit'))
-        .skip(ctx.meta.get('offset')) as never;
-    } else {
-      queries = AvailableEvent.find()
-        .where(filter)
-        .select(attributes)
-        .limit(ctx.meta.get('limit'))
-        .skip(ctx.meta.get('offset')) as never;
+    if (attributes) {
+      queries = queries.select(attributes);
     }
 
+    const data = (await queries) as Document<IAvailableEvent>[];
+
     return {
-      data: await queries,
+      data,
       count,
     };
   },

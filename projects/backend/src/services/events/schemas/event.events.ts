@@ -4,7 +4,7 @@ import { EventStatus } from '../../../utils/constants/services.constants';
 
 export const eventSchema = new Schema<IEvent>(
   {
-    eventName: { type: String, required: true },
+    eventName: { type: Schema.ObjectId, ref: 'AvailableEvent', required: true },
     location: { type: String, required: true },
     proposedDates: { type: [Date], required: true, minlength: 1, maxlength: 3 },
     status: {
