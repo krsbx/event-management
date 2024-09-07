@@ -21,13 +21,13 @@ const LeftRightWrapper = ({
   return (
     <div className={containerClass}>
       {leftIcon && (
-        <div className="pointer-events-none items-center absolute inset-y-0 pl-3.5 left-0 z-50 top-1/2 -translate-y-1/2">
+        <div className="items-center absolute inset-y-0 pl-3.5 left-0 z-50 top-1/2 -translate-y-1/2">
           {leftIcon}
         </div>
       )}
       {children}
       {rightIcon && (
-        <div className="pointer-events-none items-center absolute inset-y-0 pr-3.5 right-0 z-50 top-1/2 -translate-y-1/2">
+        <div className="items-center absolute inset-y-0 pr-3.5 right-0 z-50 top-1/2 -translate-y-1/2">
           {rightIcon}
         </div>
       )}

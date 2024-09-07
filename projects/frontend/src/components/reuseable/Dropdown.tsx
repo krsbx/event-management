@@ -66,6 +66,9 @@ const Dropdown = forwardRef<HTMLSelectElement, Props>(
               {...props}
               ref={ref}
             >
+              {!props.value && props.placeholder && (
+                <option value={""}>{props.placeholder}</option>
+              )}
               {children}
             </select>
           </LeftRightWrapper>
@@ -76,7 +79,7 @@ const Dropdown = forwardRef<HTMLSelectElement, Props>(
             successMessage={successMessage}
           />
         </div>
-        <style jsx>{`
+        <style jsx={"true"}>{`
           .no-chevron > select {
             /* for Firefox */
             -moz-appearance: none;

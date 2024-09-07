@@ -18,8 +18,8 @@ const ErrorSuccessMessage = ({
 
   const textClass = classNames({
     "mt-1 text-sm": true,
-    "red-500": error,
-    "green-500": success,
+    "text-red-500": error,
+    "text-green-500": success,
   });
 
   return <div className={textClass}>{successMessage || errorMessage}</div>;

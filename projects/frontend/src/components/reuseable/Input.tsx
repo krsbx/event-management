@@ -81,7 +81,7 @@ const Input = forwardRef<HTMLInputElement, Props>(
             successMessage={successMessage}
           />
         </div>
-        <style jsx>{`
+        <style jsx={"true"}>{`
           input[type="number"]::-webkit-inner-spin-button,
           input[type="number"]::-webkit-outer-spin-button {
             -webkit-appearance: none;
