@@ -24,3 +24,11 @@ export const $updateBodySchema = z.object({
     .instanceof(Document<Types.ObjectId, RecordUnknown, IEvent>)
     .optional(),
 });
+
+export const updateBodySchema = z.object({
+  status: z.nativeEnum(EventStatus),
+  remarks: z.string().nullable().optional(),
+  eventDate: z.coerce.date().nullable().optional(),
+});
+
+export type UpdateBodySchema = z.infer<typeof updateBodySchema>;

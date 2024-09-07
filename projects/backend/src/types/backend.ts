@@ -12,6 +12,8 @@ export interface MigrationFile {
 
 export type FilterQuery<T> = {
   [P in keyof T]?: MongooseQuerySelector<T[P]>;
+} & {
+  _id?: MongooseQuerySelector<MonggoseTypes.ObjectId>;
 };
 
 export type Document<T> = MongooseDocument<unknown, RecordUnknown, T> &

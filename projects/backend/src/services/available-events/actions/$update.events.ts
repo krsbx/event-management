@@ -25,7 +25,9 @@ export const $onUpdateEvent = BlazeCreator.action({
     if (instance) {
       await instance.updateOne(payload);
 
-      result.data = [instance];
+      const updated = (await AvailableEvent.findById(instance._id))!;
+
+      result.data = [updated as never];
       result.count = 1;
 
       return result;
