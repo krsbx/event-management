@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import { BlazeCreator, BlazeError, z } from '@busy-hour/blaze';
 
 export const onSignInUser = BlazeCreator.action({
@@ -56,7 +57,7 @@ export const onSignInUser = BlazeCreator.action({
     }
 
     const tokenRes = await ctx.call('core.$signJwt', {
-      payload: userRes.result.toJSON(),
+      payload: _.omit(userRes.result.toJSON(), 'password'),
     });
 
     if (!tokenRes.ok) {

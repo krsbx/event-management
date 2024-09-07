@@ -18,3 +18,12 @@ export type Document<T> = MongooseDocument<unknown, RecordUnknown, T> &
   T & {
     _id: MonggoseTypes.ObjectId;
   };
+
+export type RestListResult<T> = {
+  data: T[];
+  page: {
+    size: number;
+    current: number;
+    total: number;
+  };
+};
