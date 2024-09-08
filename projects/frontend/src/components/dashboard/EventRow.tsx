@@ -1,4 +1,4 @@
-import { memo, useMemo } from "react";
+import { memo, useCallback, useMemo } from "react";
 import Table from "../reuseable/Table";
 import { IEvent } from "../../types/api";
 import dayjs from "dayjs";
@@ -6,10 +6,12 @@ import classNames from "classnames";
 import { capitalize } from "lodash-es";
 import { EventStatus } from "../../utils/constants/services.constants";
 import Button from "../reuseable/Button";
+import { useModals } from "../../router";
 
 type Props = { event: IEvent };
 
 const EventRow = memo<Props>(({ event }) => {
+  const modals = useModals();
   const dates = useMemo(() => {
     if (event.eventDate) {
       return dayjs(event.eventDate).format("DD MMM YYYY hh:mm A");
@@ -33,6 +35,13 @@ const EventRow = memo<Props>(({ event }) => {
     return dayjs(event.createdAt).format("DD MMM YYYY hh:mm A");
   }, [event]);
 
+  const onViewEvent = useCallback(() => {
+    modals.open("/update", {
+      state: event,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [event]);
+
   return (
     <Table.Tr
       key={`event-${event._id}`}
@@ -42,14 +51,16 @@ const EventRow = memo<Props>(({ event }) => {
         {event.eventName.eventName}
       </Table.Td>
       <Table.Td className="text-xs">
-        {event.proposedTo?.username || "User Deleted"}
+        {event.proposedTo?.username || "N/A"}
       </Table.Td>
       <Table.Td className="text-xs">{dates}</Table.Td>
       <Table.Td className={statusClass}>{status}</Table.Td>
       <Table.Td className="text-xs">{createdAt}</Table.Td>
       <Table.Td>
         <div>
-          <Button className="text-xs">View</Button>
+          <Button className="text-xs" onClick={onViewEvent}>
+            View
+          </Button>
         </div>
       </Table.Td>
     </Table.Tr>

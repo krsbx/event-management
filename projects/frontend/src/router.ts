@@ -7,7 +7,12 @@ export type Path = `/` | `/auth/signin` | `/auth/signup`;
 
 export type Params = {};
 
-export type ModalPath = `/create`;
+export type ModalPath =
+  | `/accept`
+  | `/cancel`
+  | `/create`
+  | `/reject`
+  | `/update`;
 
 export const { Link, Navigate } = components<Path, Params>();
 export const { useModals, useNavigate, useParams } = hooks<

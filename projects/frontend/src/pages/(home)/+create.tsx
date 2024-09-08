@@ -15,8 +15,8 @@ import Dropdown from "../../components/reuseable/Dropdown";
 import { useAvailableEventStore } from "../../store/resources/available-event.resources";
 import { useUserStore } from "../../store/resources/user.resources";
 import useCreateEventApi from "../../hooks/events/useCreateEventApi";
-import { AiOutlineClose } from "react-icons/ai";
 import useListEventApi from "../../hooks/events/useListEventApi";
+import Modal from "../../components/reuseable/Modal";
 
 const CreateEventModal = () => {
   const modals = useModals();
@@ -49,8 +49,7 @@ const CreateEventModal = () => {
   }, []);
 
   return (
-    <div className="fixed w-screen h-screen z-10 inset-0 bg-black/25 flex items-center justify-center">
-      <div className="absolute inset-0 z-[-1]" onClick={onClose}></div>
+    <Modal>
       <Formik<CreateEventSchema>
         onSubmit={onCreate}
         validationSchema={toFormikValidationSchema(createEventSchema)}
@@ -67,12 +66,7 @@ const CreateEventModal = () => {
       >
         {({ values, errors, touched, handleChange, handleBlur }) => (
           <Form>
-            <div className="flex flex-col space-y-4 w-[80vw] md:w-[65vw] bg-white p-5 rounded-lg relative">
-              <div className="absolute top-5 right-5">
-                <Button className="aspect-square" onClick={onClose}>
-                  <AiOutlineClose />
-                </Button>
-              </div>
+            <div className="flex flex-col space-y-4 relative">
               <p className="text-xl w-full text-center">Schedule an Event</p>
               <div className="grid grid-cols-3 gap-2 items-center">
                 <Label label="Event Name" />
@@ -197,7 +191,7 @@ const CreateEventModal = () => {
           </Form>
         )}
       </Formik>
-    </div>
+    </Modal>
   );
 };
 
