@@ -18,7 +18,6 @@ export const $onFindEvent = BlazeCreator.action({
 
     let queries = Event.findOne()
       .where(filter)
-      .limit(ctx.meta.get('limit'))
       .skip(ctx.meta.get('offset'))
       .populate(['eventName', 'proposedBy', 'proposedTo']);
 

@@ -16,10 +16,7 @@ export const $onFindUser = BlazeCreator.action({
   async handler(ctx) {
     const { filter, attributes } = await ctx.request.body();
 
-    let queries = User.findOne()
-      .where(filter)
-      .limit(ctx.meta.get('limit'))
-      .skip(ctx.meta.get('offset'));
+    let queries = User.findOne().where(filter).skip(ctx.meta.get('offset'));
 
     if (attributes) {
       queries = queries.select(attributes);

@@ -4,6 +4,7 @@ import { $onUpdateUser } from './actions/$update.users';
 import { $onDeleteUser } from './actions/$delete.users';
 import { $onFindUser } from './actions/$find.users';
 import { $onListUser } from './actions/$list.users';
+import { onListUser } from './actions/list.users';
 
 const service = BlazeCreator.service({
   name: 'users',
@@ -17,6 +18,7 @@ const service = BlazeCreator.service({
     $list: $onListUser,
 
     // Public
+    list: onListUser,
   },
 });
 

@@ -46,7 +46,7 @@ export const onListEvent = BlazeCreator.action({
       page: {
         size: listRes.result.count,
         current: page || 1,
-        total: Math.ceil(listRes.result.count / (limit || 10)),
+        total: Math.ceil(listRes.result.count / (limit || 1)),
       },
     };
 

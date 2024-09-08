@@ -22,8 +22,11 @@ export const $onListEvent = BlazeCreator.action({
     const count = await AvailableEvent.countDocuments().where(filter);
     let queries = AvailableEvent.find()
       .where(filter)
-      .limit(ctx.meta.get('limit'))
       .skip(ctx.meta.get('offset'));
+
+    if (ctx.meta.get('limit')) {
+      queries = queries.limit(ctx.meta.get('limit'));
+    }
 
     if (attributes) {
       queries = queries.select(attributes);

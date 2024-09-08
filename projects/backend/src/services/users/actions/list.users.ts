@@ -1,13 +1,12 @@
 import { BlazeCreator, BlazeError } from '@busy-hour/blaze';
-import { listQuerySchema } from '../validations/list.events';
-import { Document, FilterQuery, RestListResult } from '../../../types/backend';
-import { IEvent } from '../interfaces/event.events';
+import { listQuerySchema } from '../validations/list.users';
 import { authHeader } from '../../../validations/common';
-import { validateUserToken } from '../../../hooks/before/auth.hooks';
 import { metaAuth } from '../../../utils/constants';
-import { UserRoles } from '../../../utils/constants/services.constants';
+import { validateUserToken } from '../../../hooks/before/auth.hooks';
+import { Document, FilterQuery, RestListResult } from '../../../types/backend';
+import { IUser } from '../interfaces/user.users';
 
-export const onListEvent = BlazeCreator.action({
+export const onListUser = BlazeCreator.action({
   rest: 'GET /',
   throwOnValidationError: true,
   openapi: BlazeCreator.action.openapi({
@@ -16,8 +15,8 @@ export const onListEvent = BlazeCreator.action({
     },
   }),
   validator: BlazeCreator.action.validator({
-    query: listQuerySchema,
     header: authHeader,
+    query: listQuerySchema,
   }),
   meta: {
     ...metaAuth,
@@ -27,27 +26,20 @@ export const onListEvent = BlazeCreator.action({
   },
   async handler(ctx) {
     const authedUser = ctx.meta.get('user')!;
-    const { limit, page } = ctx.request.query;
-    const filter: FilterQuery<IEvent> = {};
+    const { limit, page, role } = ctx.request.query;
+    const filter: FilterQuery<IUser> = {
+      role: {
+        $ne: authedUser.role,
+      },
+    };
 
-    switch (authedUser.role) {
-      case UserRoles.HUMAN_RESOURCE:
-        filter.proposedBy = {
-          $eq: authedUser._id,
-        };
-        break;
-
-      case UserRoles.VENDOR:
-        filter.proposedTo = {
-          $eq: authedUser._id,
-        };
-        break;
-
-      default:
-        break;
+    if (role) {
+      filter.role = {
+        $eq: role,
+      };
     }
 
-    const listRes = await ctx.call('events.$list', {
+    const listRes = await ctx.call('users.$list', {
       filter,
       limit,
       page,
@@ -61,7 +53,7 @@ export const onListEvent = BlazeCreator.action({
       });
     }
 
-    const result: RestListResult<Document<IEvent>> = {
+    const result: RestListResult<Document<IUser>> = {
       data: listRes.result.data,
       page: {
         size: listRes.result.count,
