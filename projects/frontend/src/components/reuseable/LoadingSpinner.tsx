@@ -8,6 +8,7 @@ type Props = {
 const LoadingSpinner = ({ isLoading }: Props) => {
   const containerClass = classNames({
     "w-full h-full": true,
+    "top-0 left-0": true,
     "flex flex-col bg-black/25": true,
     "items-center justify-center": true,
     "space-y-2": true,
@@ -18,7 +19,9 @@ const LoadingSpinner = ({ isLoading }: Props) => {
     "opacity-100": isLoading,
     "z-0": !isLoading,
     "z-20": isLoading,
-    absoulte: true,
+    "inset-0": true,
+    hidden: !isLoading,
+    absolute: isLoading,
   });
 
   return (
