@@ -7,7 +7,7 @@ export type Path = `/` | `/auth/signin` | `/auth/signup`;
 
 export type Params = {};
 
-export type ModalPath = never;
+export type ModalPath = `/create`;
 
 export const { Link, Navigate } = components<Path, Params>();
 export const { useModals, useNavigate, useParams } = hooks<
