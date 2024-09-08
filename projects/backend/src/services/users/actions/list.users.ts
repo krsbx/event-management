@@ -54,8 +54,10 @@ export const onListUser = BlazeCreator.action({
       });
     }
 
-    const result: RestListResult<Document<Omit<IUser, 'password'>>> = {
-      data: listRes.result.data.map((user) => _.omit(user, ['password'])),
+    const result: RestListResult<Omit<IUser, 'password'>> = {
+      data: listRes.result.data.map((user) =>
+        _.omit(user.toJSON(), ['password'])
+      ),
       page: {
         size: listRes.result.count,
         current: page || 1,
