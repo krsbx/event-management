@@ -1,17 +1,10 @@
 import { create } from "zustand";
-import { IEvent, RestListResponse } from "../types/api";
+import { IUser, ResourceStore } from "../../types/api";
 import { uniqBy } from "lodash-es";
 
-export interface EventStore extends RestListResponse<IEvent> {
-  isFetched: boolean;
-  setIsFetched: (status: boolean | ((prev: boolean) => boolean)) => void;
-  addData: (resources: IEvent | IEvent[]) => void;
-  updateData: (id: string, resource: IEvent | Partial<IEvent>) => void;
-  removeData: (id: string | string[]) => void;
-  setData: (resources: IEvent[] | ((prev: IEvent[]) => IEvent[])) => void;
-}
+export type UserStore = ResourceStore<IUser>;
 
-export const EventStore = create<EventStore>((set, get) => ({
+export const useUserStore = create<UserStore>((set, get) => ({
   isFetched: false,
   setIsFetched(status) {
     const value =
@@ -51,6 +44,11 @@ export const EventStore = create<EventStore>((set, get) => ({
       typeof resources === "function" ? resources(get().data) : resources;
 
     set({ data: value });
+  },
+  setInformation(info) {
+    const value = typeof info === "function" ? info(get().page) : info;
+
+    set({ page: value });
   },
   data: [],
   page: {

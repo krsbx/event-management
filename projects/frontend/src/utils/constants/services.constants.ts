@@ -3,13 +3,18 @@ export enum UserRoles {
   HUMAN_RESOURCE = "human-resource",
 }
 
+export const UserRoleMap = {
+  [UserRoles.VENDOR]: "Vendor",
+  [UserRoles.HUMAN_RESOURCE]: "Human Resource",
+} as const;
+
 export const userRoleOptions = [
   {
-    label: "Vendor",
+    label: UserRoleMap[UserRoles.VENDOR],
     value: UserRoles.VENDOR,
   },
   {
-    label: "Human Resource",
+    label: UserRoleMap[UserRoles.HUMAN_RESOURCE],
     value: UserRoles.HUMAN_RESOURCE,
   },
 ];

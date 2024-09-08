@@ -31,11 +31,29 @@ export interface IEvent {
   updatedAt: string | Date;
 }
 
+export interface PageInformation {
+  size: number;
+  current: number;
+  total: number;
+}
+
 export interface RestListResponse<T> {
   data: T[];
-  page: {
-    size: number;
-    current: number;
-    total: number;
-  };
+  page: PageInformation;
+}
+
+export interface ResourceStore<
+  T extends {
+    _id: string;
+  },
+> extends RestListResponse<T> {
+  isFetched: boolean;
+  setIsFetched: (status: boolean | ((prev: boolean) => boolean)) => void;
+  addData: (resources: T | T[]) => void;
+  updateData: (id: string, resource: T | Partial<T>) => void;
+  removeData: (id: string | string[]) => void;
+  setData: (resources: T[] | ((prev: T[]) => T[])) => void;
+  setInformation: (
+    info: PageInformation | ((prev: PageInformation) => PageInformation),
+  ) => void;
 }
