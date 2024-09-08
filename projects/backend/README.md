@@ -1,53 +1,93 @@
-Input from Frontend
+# Event Management Backend Services
 
-- Company Name : String
-- 3 Date : DateTime
-- 1 Location : String
-- Event Name? : String -> UUID?
+## Overview
 
-Available Event Model
+Event Management Backend Services are developed using [@busy-hour/blaze](https://github.com/busy-hour/blaze) for the sake of scalability and maintainability. Since it allow us to develop the server into a Event Driven architecture.
 
-- alvailableEventId : String -> UUID
-- eventName : String
-- eventDate : DateTime
-- createdAt : DateTime
-- updatedAt : DateTime
+The database that we use are MongoDB especially the docker image one and integrated with mongoose.
 
-Event Model
+## Getting Started
 
-- eventId : String -> UUID
-- eventName : String
-- location: String
-- proposedDates: String[]
-- status: String -> Pending, Approved, Rejected
-- remarks : String | Null
-- proposedBy : String -> UUID
-- proposedTo : String -> UUID
-- eventDate : DateTime | Null
-- createdAt : DateTime
-- updatedAt : DateTime
+To get started with the backend services, please follow the steps below:
 
-User Model
+1. Clone the repository from [GitHub](https://github.com/krsbx/event-management).
 
-- userId : String -> UUID
-- username : String
-- password : String
-- role : String -> Vendor, HR
-- createdAt : DateTime
-- updatedAt : DateTime
+```bash
+git clone git@github.com:krsbx/event-management.git
+```
 
-Migration Model
+2. Run the following command to install the dependencies:
 
-- migrationName: : String
-- createdAt : DateTime
+```bash
+pnpm install # or npm install, we recommend to use pnpm
+```
 
-Seeder Model
+3. Setup the `.env` file in the project root and in the `projects/backend`.
 
-- seederName: : String
-- createdAt : DateTime
+> Keep in mind that both `.env` variables in the root and `projects/backend` must be in sync.
 
-Flow
+4. Setup the `mongodb` and `mongo-express` using the `docker-compose.yml` file in the project root.
 
-1. HR Create Event for a specific Vendor
-2. Vendor will review the event that proposed by the HR
-3. Vendor will approve the event or reject the event with remarks
+```bash
+docker compose --env-file .env up -d
+```
+
+> Note: Make sure to run the `docker compose --env-file .env up -d` command in the project root.
+
+5. Run the following command to start the server in the `projects/backend` directory:
+
+```bash
+pnpm run dev # or npm run dev, we recommend to use pnpm
+```
+
+## Thought Process
+
+For more detail regarding the thought process of the solutions, please refer to the [THOUGHT-PROCESS.MD](./docs/THOUGHT-PROCESS.MD).
+
+## System Design
+
+For more detail regarding the system design, please refer to the [SYSTEM-DESIGN.MD](./docs/SYSTEM-DESIGN.MD).
+
+## Dependencies
+
+The backend services are developed using the following libraries:
+
+- [@busy-hour/blaze](https://github.com/busy-hour/blaze)
+
+  > The [hono](https://github.com/honojs/hono) meta framework for handling the RESTful API and connections between each services (e.g. users service/routes comunicate with auth service/routes).
+
+- [@hono/node-server](https://github.com/honojs/hono)
+
+  > The adapter for [@busy-hour/blaze](https://github.com/busy-hour/blaze) and [hono](https://github.com/honojs/hono) so it can be run as a Node.js server.
+
+- [@hono/swagger-ui](https://github.com/honojs/hono)
+
+  > The adapter for creating Swagger UI for the API automatically.
+
+- [zod](https://github.com/colinhacks/zod)
+
+  > The type-safety schema validation library.
+
+- [dotenv](https://github.com/motdotla/dotenv)
+
+  > The environment variable loader.
+
+- [mongoose](https://github.com/Automattic/mongoose)
+
+  > The MongoDB driver for Node.js.
+
+- [bcrypt](https://github.com/kelektiv/node.bcrypt)
+
+  > The password hashing algorithm.
+
+- [jsonwebtoken](https://github.com/auth0/node-jsonwebtoken)
+
+  > The JSON Web Token utility for Node.js.
+
+- [lodash](https://github.com/lodash/lodash)
+
+  > The utility library for JavaScript.
+
+- [dayjs](https://github.com/iamkun/dayjs)
+
+  > The date library for JavaScript.

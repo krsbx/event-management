@@ -4,14 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "npx tsx src/index.ts",
+    "dev": "npx tsx --watch src/index.ts",
+    "build": "rimraf dist && tsc --project tsconfig.build.json",
     "seed:create":"npx tsx src/bin/cli create",
     "seed": "npx tsx src/bin/cli migrate",
     "seed:up": "npm run seed -- --action up",
     "seed:down": "npm run seed -- --action down",
     "seed:revert": "npm run seed -- --action revert",
-    "seed:latest": "npm run seed -- --action latest",
-    "dev": "npx tsx --watch src/index.ts",
-    "build": "rimraf dist && tsc --project tsconfig.build.json"
+    "seed:latest": "npm run seed -- --action latest"
   },
   "keywords": [],
   "author": "",

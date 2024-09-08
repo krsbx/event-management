@@ -1,15 +1,9 @@
-# event-management
+# Event Management
 
-To install dependencies:
+## Getting Started
 
-```bash
-bun install
-```
+For getting started with the project, please refer to the specific README files in each project directories.
 
-To run:
+- [Backend](./projects/backend/README.md#getting-started)
 
-```bash
-bun run -
-```
-
-This project was created using `bun init` in bun v1.1.26. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime.
+- [Frontend](./projects/frontend/README.md#getting-started)
