@@ -12,7 +12,7 @@ export const proposedDateSchema = z.string().transform((value, ctx) => {
     });
   }
 
-  if (date.isBefore(dayjs().add(1, "day"))) {
+  if (date.isBefore(dayjs())) {
     ctx.addIssue({
       code: z.ZodIssueCode.custom,
       message: "Date cannot be in the past",

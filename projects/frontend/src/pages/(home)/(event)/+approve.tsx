@@ -34,7 +34,7 @@ const ApproveEventModal = () => {
       values: UpdateEventSchema,
       formikHelpers: FormikHelpers<UpdateEventSchema>,
     ) => {
-      await onUpdateEvent(values, formikHelpers);
+      onUpdateEvent(values, formikHelpers).catch(() => {});
       onListEvent({ limit: 10 });
       onClose();
     },

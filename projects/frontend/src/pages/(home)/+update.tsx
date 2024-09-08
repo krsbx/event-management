@@ -36,7 +36,7 @@ const UpdateEventModal = () => {
       dates.map((date) => {
         if (!date.isValid()) return null;
 
-        return date.format("YYYY-MM-DD");
+        return date.format("YYYY-MM-DDTHH:mm");
       }),
     );
   }, [event]);
@@ -102,33 +102,20 @@ const UpdateEventModal = () => {
           disabled
         />
       </div>
-      <div className="grid grid-cols-3 gap-2 items-center">
-        <Label label="Proposed Dates 1" />
-        <Input
-          containerClass="col-span-2"
-          type="date"
-          value={proposedDates[0]}
-          disabled
-        />
-      </div>
-      <div className="grid grid-cols-3 gap-2 items-center">
-        <Label label="Proposed Dates 2" />
-        <Input
-          containerClass="col-span-2"
-          type="date"
-          value={proposedDates[1]}
-          disabled
-        />
-      </div>
-      <div className="grid grid-cols-3 gap-2 items-center">
-        <Label label="Proposed Dates 3" />
-        <Input
-          containerClass="col-span-2"
-          type="date"
-          value={proposedDates[2]}
-          disabled
-        />
-      </div>
+      {proposedDates.map((date, index) => (
+        <div
+          className="grid grid-cols-3 gap-2 items-center"
+          key={`proposed-date-${index}`}
+        >
+          <Label label={`Proposed Dates ${index + 1}`} />
+          <Input
+            containerClass="col-span-2"
+            type="datetime-local"
+            value={date}
+            disabled
+          />
+        </div>
+      ))}
       <div className="grid grid-cols-3 gap-2 items-center">
         <Label label="Proposed To" />
         <Dropdown

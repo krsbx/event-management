@@ -106,7 +106,7 @@ const CreateEventModal = () => {
                 <Label label="Proposed Dates 1" />
                 <Input
                   containerClass="col-span-2"
-                  type="date"
+                  type="datetime-local"
                   value={values.proposedDate1}
                   onChange={handleChange("proposedDate1")}
                   onBlur={handleBlur("proposedDate1")}
@@ -121,7 +121,7 @@ const CreateEventModal = () => {
                 <Label label="Proposed Dates 2" />
                 <Input
                   containerClass="col-span-2"
-                  type="date"
+                  type="datetime-local"
                   value={values.proposedDate2}
                   onChange={handleChange("proposedDate2")}
                   onBlur={handleBlur("proposedDate2")}
@@ -136,7 +136,7 @@ const CreateEventModal = () => {
                 <Label label="Proposed Dates 3" />
                 <Input
                   containerClass="col-span-2"
-                  type="date"
+                  type="datetime-local"
                   value={values.proposedDate3}
                   onChange={handleChange("proposedDate3")}
                   onBlur={handleBlur("proposedDate3")}
