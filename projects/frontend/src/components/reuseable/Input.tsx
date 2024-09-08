@@ -7,7 +7,9 @@ import ErrorSuccessMessage, {
 
 export type Props = Omit<WrapperProps, "children"> &
   ErrorSuccessMessageProps &
-  React.InputHTMLAttributes<HTMLInputElement>;
+  React.InputHTMLAttributes<HTMLInputElement> & {
+    containerClass?: string;
+  };
 
 const Input = forwardRef<HTMLInputElement, Props>(
   (
@@ -18,6 +20,8 @@ const Input = forwardRef<HTMLInputElement, Props>(
       errorMessage,
       success,
       successMessage,
+
+      containerClass: _containerClass = "",
 
       // Input Props
       disabled,
@@ -62,9 +66,14 @@ const Input = forwardRef<HTMLInputElement, Props>(
       [className]: !!className,
     });
 
+    const containerClass = classNames({
+      "flex flex-col": true,
+      [_containerClass]: !!_containerClass,
+    });
+
     return (
       <React.Fragment>
-        <div className="flex flex-col">
+        <div className={containerClass}>
           <LeftRightWrapper leftIcon={leftIcon} rightIcon={rightIcon}>
             <input
               className={inputClass}

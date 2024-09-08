@@ -7,7 +7,9 @@ import ErrorSuccessMessage, {
 
 export type Props = Omit<WrapperProps, "children"> &
   ErrorSuccessMessageProps &
-  React.InputHTMLAttributes<HTMLSelectElement>;
+  React.InputHTMLAttributes<HTMLSelectElement> & {
+    containerClass?: string;
+  };
 
 const Dropdown = forwardRef<HTMLSelectElement, Props>(
   (
@@ -19,6 +21,8 @@ const Dropdown = forwardRef<HTMLSelectElement, Props>(
       success,
       successMessage,
       className = "",
+
+      containerClass: _containerClass = "",
 
       children,
       disabled,
@@ -50,15 +54,21 @@ const Dropdown = forwardRef<HTMLSelectElement, Props>(
 
       [className]: !!className,
     });
-    const containerClass = rightIcon ? "no-chevron" : "";
+
+    const containerClass = classNames({
+      "flex flex-col": true,
+      [_containerClass]: !!_containerClass,
+    });
+
+    const wrapperClass = rightIcon ? "no-chevron" : "";
 
     return (
       <React.Fragment>
-        <div className="flex flex-col">
+        <div className={containerClass}>
           <LeftRightWrapper
             leftIcon={leftIcon}
             rightIcon={rightIcon}
-            className={containerClass}
+            className={wrapperClass}
           >
             <select
               className={selectClass}
