@@ -25,3 +25,29 @@ export enum EventStatus {
   REJECTED = "rejected",
   CANCELED = "canceled",
 }
+
+export const EventStatusMap = {
+  [EventStatus.PENDING]: "Pending",
+  [EventStatus.APPROVED]: "Approved",
+  [EventStatus.REJECTED]: "Rejected",
+  [EventStatus.CANCELED]: "Canceled",
+} as const;
+
+export const eventStatusOptions = [
+  {
+    label: EventStatusMap[EventStatus.PENDING],
+    value: EventStatus.PENDING,
+  },
+  {
+    label: EventStatusMap[EventStatus.APPROVED],
+    value: EventStatus.APPROVED,
+  },
+  {
+    label: EventStatusMap[EventStatus.REJECTED],
+    value: EventStatus.REJECTED,
+  },
+  {
+    label: EventStatusMap[EventStatus.CANCELED],
+    value: EventStatus.CANCELED,
+  },
+];

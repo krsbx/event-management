@@ -10,12 +10,13 @@ import { EventStatus } from "../../../utils/constants/services.constants";
 import { useModals } from "../../../router";
 import { Location, useLocation } from "react-router-dom";
 import { IEvent } from "../../../types/api";
+import DropdownWithLabel from "../../../components/reuseable/DropdownWithLabel";
+import DateSelection from "../../../components/dashboard/DateSelection";
 import useUpdateEventApi from "../../../hooks/events/useUpdateEventApi";
 import Button from "../../../components/reuseable/Button";
 import useListEventApi from "../../../hooks/events/useListEventApi";
-import InputWithLabel from "../../../components/reuseable/InputWithLabel";
 
-const CancelEventModal = () => {
+const ApproveEventModal = () => {
   const modals = useModals();
   const location: Location<IEvent> = useLocation();
 
@@ -33,7 +34,7 @@ const CancelEventModal = () => {
       values: UpdateEventSchema,
       formikHelpers: FormikHelpers<UpdateEventSchema>,
     ) => {
-      onUpdateEvent(values, formikHelpers).catch(() => {});
+      await onUpdateEvent(values, formikHelpers);
       onListEvent({ limit: 10 });
       onClose();
     },
@@ -55,26 +56,30 @@ const CancelEventModal = () => {
         validationSchema={toFormikValidationSchema(updateEventSchema)}
         validateOnBlur
         initialValues={{
-          status: EventStatus.CANCELED,
-          remarks: "",
+          status: EventStatus.APPROVED,
+          eventDate: null,
         }}
       >
         {({ values, errors, touched, handleChange, handleBlur }) => (
           <Form>
             <div className="flex flex-col space-y-4 relative">
               <p className="text-xl w-full text-center">Approve an Event</p>
-              <InputWithLabel
-                label="Remarks"
+              <DropdownWithLabel
+                label="Event Date"
                 className="font-bold"
-                value={values.remarks || ""}
-                placeholder="State reason for the cancelation"
-                onChange={handleChange("remarks")}
-                onBlur={handleBlur("remarks")}
-                errorMessage={errors.remarks}
-                error={touched.remarks && !!errors.remarks}
+                value={values.eventDate || ""}
+                placeholder="Select date for the event"
+                onChange={handleChange("eventDate")}
+                onBlur={handleBlur("eventDate")}
+                errorMessage={errors.eventDate}
+                error={touched.eventDate && !!errors.eventDate}
                 disabled={isLoading}
                 required
-              />
+              >
+                {event.proposedDates.map((date, index) => (
+                  <DateSelection date={date} key={`proposed-date-${index}`} />
+                ))}
+              </DropdownWithLabel>
               <Button
                 disabled={isLoading}
                 isLoading={isLoading}
@@ -90,4 +95,4 @@ const CancelEventModal = () => {
   );
 };
 
-export default CancelEventModal;
+export default ApproveEventModal;

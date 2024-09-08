@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
-import { useCallback, useEffect, useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { Location, useLocation } from "react-router-dom";
-import { ModalPath, useModals } from "../../router";
+import { useModals } from "../../router";
 import Input from "../../components/reuseable/Input";
 import Label from "../../components/reuseable/Label";
 import { useAuthStore } from "../../store/auth.store";
@@ -11,8 +11,12 @@ import { useUserStore } from "../../store/resources/user.resources";
 import { IEvent } from "../../types/api";
 import { compact } from "lodash-es";
 import Modal from "../../components/reuseable/Modal";
-import Button from "../../components/reuseable/Button";
-import { UserRoles } from "../../utils/constants/services.constants";
+import UpdateEventAction from "../../components/dashboard/UpdateEventAction";
+import {
+  EventStatus,
+  eventStatusOptions,
+} from "../../utils/constants/services.constants";
+import classNames from "classnames";
 
 const UpdateEventModal = () => {
   const modals = useModals();
@@ -41,15 +45,13 @@ const UpdateEventModal = () => {
   const users = useUserStore((state) => state.data);
   const user = useAuthStore((state) => state.user);
 
-  const onAction = useCallback(
-    (path: ModalPath) => () => {
-      modals.open(path, {
-        state: event,
-      });
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [event],
-  );
+  const statusClass = classNames({
+    "text-green-500": event.status === EventStatus.APPROVED,
+    "text-red-500": event.status === EventStatus.REJECTED,
+    "text-yellow-500": event.status === EventStatus.PENDING,
+    "text-gray-500": event.status === EventStatus.CANCELED,
+    "font-bold": true,
+  });
 
   useEffect(() => {
     if (event) return;
@@ -72,6 +74,21 @@ const UpdateEventModal = () => {
           {availableEvents.map((event) => (
             <option value={event._id} key={`event-${event._id}`}>
               {event.eventName}
+            </option>
+          ))}
+        </Dropdown>
+      </div>
+      <div className="grid grid-cols-3 gap-2 items-center">
+        <Label label="Status" />
+        <Dropdown
+          containerClass="col-span-2"
+          className={statusClass}
+          value={event?.status}
+          disabled
+        >
+          {eventStatusOptions.map((status) => (
+            <option value={status.value} key={`status-${status.value}`}>
+              {status.label}
             </option>
           ))}
         </Dropdown>
@@ -134,11 +151,7 @@ const UpdateEventModal = () => {
           disabled
         />
       </div>
-      {user.role === UserRoles.HUMAN_RESOURCE ? (
-        <Button onClick={onAction("/cancel")}>Cancel</Button>
-      ) : (
-        <Button onClick={onAction("/accept")}>Accept</Button>
-      )}
+      <UpdateEventAction event={event} user={user} />
     </Modal>
   );
 };

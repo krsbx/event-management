@@ -8,7 +8,7 @@ export type Path = `/` | `/auth/signin` | `/auth/signup`;
 export type Params = {};
 
 export type ModalPath =
-  | `/accept`
+  | `/approve`
   | `/cancel`
   | `/create`
   | `/reject`

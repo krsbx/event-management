@@ -37,7 +37,22 @@ export type CreateEventSchema = z.infer<typeof createEventSchema>;
 export const updateEventSchema = z.object({
   status: z.nativeEnum(EventStatus),
   remarks: z.string().nullable().optional(),
-  eventDate: z.coerce.date().nullable().optional(),
+  eventDate: z
+    .string()
+    .nullable()
+    .optional()
+    .transform((value, ctx) => {
+      const date = dayjs(value);
+
+      if (!date.isValid()) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "Invalid date format",
+        });
+      }
+
+      return value;
+    }),
 });
 
 export type UpdateEventSchema = z.infer<typeof updateEventSchema>;
