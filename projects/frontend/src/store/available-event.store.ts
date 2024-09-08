@@ -1,17 +1,24 @@
 import { create } from "zustand";
-import { IUser, RestListResponse } from "../types/api";
+import { IAvailableEvent, RestListResponse } from "../types/api";
 import { uniqBy } from "lodash-es";
 
-export interface UserStore extends RestListResponse<IUser> {
+export interface AvailableEventStore extends RestListResponse<IAvailableEvent> {
   isFetched: boolean;
   setIsFetched: (status: boolean | ((prev: boolean) => boolean)) => void;
-  addData: (resources: IUser | IUser[]) => void;
-  updateData: (id: string, resource: IUser | Partial<IUser>) => void;
+  addData: (resources: IAvailableEvent | IAvailableEvent[]) => void;
+  updateData: (
+    id: string,
+    resource: IAvailableEvent | Partial<IAvailableEvent>,
+  ) => void;
   removeData: (id: string | string[]) => void;
-  setData: (resources: IUser[] | ((prev: IUser[]) => IUser[])) => void;
+  setData: (
+    resources:
+      | IAvailableEvent[]
+      | ((prev: IAvailableEvent[]) => IAvailableEvent[]),
+  ) => void;
 }
 
-export const useUserStore = create<UserStore>((set, get) => ({
+export const AvailableEventStore = create<AvailableEventStore>((set, get) => ({
   isFetched: false,
   setIsFetched(status) {
     const value =
