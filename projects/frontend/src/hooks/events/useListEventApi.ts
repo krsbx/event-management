@@ -1,27 +1,36 @@
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
 import { useEventStore } from "../../store/resources/event.resources";
 import { listEvents } from "../../api/event.api";
 
-const useEventApi = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const { isFetched, setIsFetched, setData, setInformation, data, page } =
-    useEventStore((state) => ({
-      isFetched: state.isFetched,
-      setIsFetched: state.setIsFetched,
-      setData: state.setData,
-      setInformation: state.setInformation,
-      data: state.data,
-      page: state.page,
-    }));
+const useListEventApi = () => {
+  const {
+    isFetched,
+    setIsFetched,
+    setData,
+    setInformation,
+    data,
+    page,
+    isLoading,
+    setIsLoading,
+  } = useEventStore((state) => ({
+    isFetched: state.isFetched,
+    setIsFetched: state.setIsFetched,
+    setData: state.setData,
+    setInformation: state.setInformation,
+    data: state.data,
+    page: state.page,
+    isLoading: state.isLoading,
+    setIsLoading: state.setIsLoading,
+  }));
 
   const onListEvent = useCallback(
-    async (query: { limit?: number; offset?: number }) => {
+    async (query?: { limit?: number; page?: number }) => {
       try {
         setIsLoading(true);
 
         const resource = await listEvents({
-          limit: query.limit || 0,
-          offset: query.offset || 0,
+          limit: query?.limit || 0,
+          page: query?.page || 1,
         });
 
         setData(resource.data);
@@ -47,4 +56,4 @@ const useEventApi = () => {
   };
 };
 
-export default useEventApi;
+export default useListEventApi;

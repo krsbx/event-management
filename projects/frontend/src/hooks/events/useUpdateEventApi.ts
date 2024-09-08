@@ -3,6 +3,7 @@ import { useEventStore } from "../../store/resources/event.resources";
 import { updateEvent } from "../../api/event.api";
 import { UpdateEventSchema } from "../../validations/event.validations";
 import { FormikHelpers } from "formik";
+import { onApiError } from "../../utils/common.utils";
 
 const useUpdateEventApi = (eventId: string) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -23,6 +24,10 @@ const useUpdateEventApi = (eventId: string) => {
         formikHelpers.resetForm();
 
         updateData(eventId, resource);
+      } catch (e) {
+        onApiError(e, formikHelpers);
+
+        throw e;
       } finally {
         setIsLoading(false);
       }

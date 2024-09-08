@@ -47,6 +47,8 @@ export interface ResourceStore<
     _id: string;
   },
 > extends RestListResponse<T> {
+  isLoading: boolean;
+  setIsLoading: (status: boolean | ((prev: boolean) => boolean)) => void;
   isFetched: boolean;
   setIsFetched: (status: boolean | ((prev: boolean) => boolean)) => void;
   addData: (resources: T | T[]) => void;

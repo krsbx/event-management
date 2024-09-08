@@ -5,6 +5,13 @@ import { uniqBy } from "lodash-es";
 export type EventStore = ResourceStore<IEvent>;
 
 export const useEventStore = create<EventStore>((set, get) => ({
+  isLoading: false,
+  setIsLoading(status) {
+    const value =
+      typeof status === "function" ? status(get().isLoading) : status;
+
+    set({ isLoading: value });
+  },
   isFetched: false,
   setIsFetched(status) {
     const value =

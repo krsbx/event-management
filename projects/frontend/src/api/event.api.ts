@@ -5,8 +5,16 @@ import {
 } from "../validations/event.validations";
 import { axios } from "./axios.api";
 
-export async function createEvent(payload: CreateEventSchema) {
-  const { data } = await axios.post<IEvent>("/events", payload);
+export async function createEvent({
+  proposedDate1,
+  proposedDate2,
+  proposedDate3,
+  ...payload
+}: CreateEventSchema) {
+  const { data } = await axios.post<IEvent>("/events", {
+    ...payload,
+    proposedDates: [proposedDate1, proposedDate2, proposedDate3],
+  });
 
   return data;
 }
@@ -17,7 +25,7 @@ export async function updateEvent(eventId: string, payload: UpdateEventSchema) {
   return data;
 }
 
-export async function listEvents(query: { limit: number; offset: number }) {
+export async function listEvents(query: { limit: number; page: number }) {
   const { data } = await axios.get<RestListResponse<IEvent>>("/events", {
     params: query,
   });
@@ -27,7 +35,7 @@ export async function listEvents(query: { limit: number; offset: number }) {
 
 export async function listAvailableEvents(query: {
   limit: number;
-  offset: number;
+  page: number;
 }) {
   const { data } = await axios.get<RestListResponse<IAvailableEvent>>(
     "/available-events",

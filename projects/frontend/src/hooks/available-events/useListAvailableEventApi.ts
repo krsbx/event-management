@@ -1,27 +1,36 @@
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
 import { useAvailableEventStore } from "../../store/resources/available-event.resources";
 import { listAvailableEvents } from "../../api/event.api";
 
 const useListAvailableEventApi = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const { isFetched, setIsFetched, setData, setInformation, data, page } =
-    useAvailableEventStore((state) => ({
-      isFetched: state.isFetched,
-      setIsFetched: state.setIsFetched,
-      setData: state.setData,
-      setInformation: state.setInformation,
-      data: state.data,
-      page: state.page,
-    }));
+  const {
+    isFetched,
+    setIsFetched,
+    setData,
+    setInformation,
+    data,
+    page,
+    isLoading,
+    setIsLoading,
+  } = useAvailableEventStore((state) => ({
+    isFetched: state.isFetched,
+    setIsFetched: state.setIsFetched,
+    setData: state.setData,
+    setInformation: state.setInformation,
+    data: state.data,
+    page: state.page,
+    isLoading: state.isLoading,
+    setIsLoading: state.setIsLoading,
+  }));
 
-  const onListEvent = useCallback(
-    async (query: { limit?: number; offset?: number }) => {
+  const onListAvailableEvent = useCallback(
+    async (query?: { limit?: number; page?: number }) => {
       try {
         setIsLoading(true);
 
         const resource = await listAvailableEvents({
-          limit: query.limit || 0,
-          offset: query.offset || 0,
+          limit: query?.limit || 0,
+          page: query?.page || 1,
         });
 
         setData(resource.data);
@@ -39,7 +48,7 @@ const useListAvailableEventApi = () => {
   return {
     isLoading,
     isFetched,
-    onListEvent,
+    onListAvailableEvent,
     resource: {
       data,
       page,

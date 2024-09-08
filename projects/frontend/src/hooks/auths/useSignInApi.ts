@@ -1,4 +1,3 @@
-import { has, isNil } from "lodash-es";
 import { useCallback, useState } from "react";
 import { FormikHelpers } from "formik";
 import { jwtDecode } from "jwt-decode";
@@ -7,6 +6,7 @@ import { signInUser } from "../../api/auth.api";
 import { useNavigate } from "../../router";
 import { useAuthStore } from "../../store/auth.store";
 import { IUser } from "../../types/api";
+import { onApiError } from "../../utils/common.utils";
 
 const useSignInApi = () => {
   const navigate = useNavigate();
@@ -35,13 +35,9 @@ const useSignInApi = () => {
 
         navigate("/");
       } catch (e) {
-        if (!(e instanceof Error)) return;
+        onApiError(e, formikHelpers);
 
-        if (e.name !== "BlazeError") return;
-
-        if (has(e, "errors") && !isNil(e.errors)) {
-          formikHelpers.setErrors(e.errors as Record<string, string>);
-        }
+        throw e;
       } finally {
         setIsLoading(false);
       }

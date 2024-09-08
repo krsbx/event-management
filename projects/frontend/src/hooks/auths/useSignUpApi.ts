@@ -1,9 +1,9 @@
-import { has, isNil } from "lodash-es";
 import { useCallback, useState } from "react";
 import { FormikHelpers } from "formik";
 import { UserSignUpSchema } from "../../validations/auth.validations";
 import { signUpUser } from "../../api/auth.api";
 import { useNavigate } from "../../router";
+import { onApiError } from "../../utils/common.utils";
 
 const useSignUpApi = () => {
   const navigate = useNavigate();
@@ -23,17 +23,14 @@ const useSignUpApi = () => {
 
         navigate("/auth/signin");
       } catch (e) {
-        if (!(e instanceof Error)) return;
+        onApiError(e, formikHelpers);
 
-        if (e.name !== "BlazeError") return;
-
-        if (has(e, "errors") && !isNil(e.errors)) {
-          formikHelpers.setErrors(e.errors as Record<string, string>);
-        }
+        throw e;
       } finally {
         setIsLoading(false);
       }
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [],
   );
 

@@ -1,27 +1,36 @@
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
 import { useUserStore } from "../../store/resources/user.resources";
 import { listUsers } from "../../api/users.api";
 
 const useListUserApi = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const { isFetched, setIsFetched, setData, setInformation, data, page } =
-    useUserStore((state) => ({
-      isFetched: state.isFetched,
-      setIsFetched: state.setIsFetched,
-      setData: state.setData,
-      setInformation: state.setInformation,
-      data: state.data,
-      page: state.page,
-    }));
+  const {
+    isFetched,
+    setIsFetched,
+    setData,
+    setInformation,
+    data,
+    page,
+    isLoading,
+    setIsLoading,
+  } = useUserStore((state) => ({
+    isFetched: state.isFetched,
+    setIsFetched: state.setIsFetched,
+    setData: state.setData,
+    setInformation: state.setInformation,
+    data: state.data,
+    page: state.page,
+    isLoading: state.isLoading,
+    setIsLoading: state.setIsLoading,
+  }));
 
   const onListUser = useCallback(
-    async (query: { limit?: number; offset?: number }) => {
+    async (query?: { limit?: number; page?: number }) => {
       try {
         setIsLoading(true);
 
         const resource = await listUsers({
-          limit: query.limit || 0,
-          offset: query.offset || 0,
+          limit: query?.limit || 0,
+          page: query?.page || 1,
         });
 
         setData(resource.data);

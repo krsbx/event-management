@@ -3,6 +3,7 @@ import { useEventStore } from "../../store/resources/event.resources";
 import { createEvent } from "../../api/event.api";
 import { CreateEventSchema } from "../../validations/event.validations";
 import { FormikHelpers } from "formik";
+import { onApiError } from "../../utils/common.utils";
 
 const useCreateEventApi = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -29,6 +30,10 @@ const useCreateEventApi = () => {
           ...prev,
           total: prev.total + 1,
         }));
+      } catch (e) {
+        onApiError(e, formikHelpers);
+
+        throw e;
       } finally {
         setIsLoading(false);
       }
