@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import { BlazeCreator, BlazeError } from '@busy-hour/blaze';
 import { listQuerySchema } from '../validations/list.users';
 import { authHeader } from '../../../validations/common';
@@ -53,8 +54,8 @@ export const onListUser = BlazeCreator.action({
       });
     }
 
-    const result: RestListResult<Document<IUser>> = {
-      data: listRes.result.data,
+    const result: RestListResult<Document<Omit<IUser, 'password'>>> = {
+      data: listRes.result.data.map((user) => _.omit(user, ['password'])),
       page: {
         size: listRes.result.count,
         current: page || 1,

@@ -37,6 +37,8 @@ export const $onCreateUser = BlazeCreator.action({
       throw passwordRes.error;
     }
 
+    payload.password = passwordRes.result;
+
     return User.create(payload);
   },
 });
